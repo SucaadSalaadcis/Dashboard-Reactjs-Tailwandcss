@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link, useParams } from 'react-router-dom';
 
 function Customers() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const params = useParams();
 
   // post
   const handleRegisterCust = (e) => {
@@ -34,10 +36,12 @@ function Customers() {
       console.log(error);
     })
   }
-
+  
+  
   //
   useEffect(()=>{
     getAllCustomers();
+  
 })
 
 
@@ -53,7 +57,7 @@ const deleteCust =  (id)=> {
   return (
     <div>
       {/* post */}
-      <div class="shadow-xl shadow-gray bg-orange-400 w-[350px] h-[240px] absolute left-[450px] top-[130px] ml-20">
+      <div class="shadow-xl shadow-gray bg-stone-600 w-[350px] h-[249px] absolute left-[250px] top-[90px] ml-20">
         <div class="p-10">
           <form>
             <input value={name} className="" type="text" onChange={(event) => setName(event.target.value)}
@@ -67,20 +71,23 @@ const deleteCust =  (id)=> {
           </form>
 
           <div class="flex justify-between mt-10">
-            <button class="bg-black text-orange-400 rounded-md px-3" onClick={handleRegisterCust} >Save </button>
-            <button class="bg-black text-orange-400 rounded-md px-3">Close</button>
+            <button class="bg-orange-400  text-black rounded-md px-3" onClick={handleRegisterCust} >Save </button>
+            {/* <Link to={`/update/${props.id}`} className='bg-white  p-2 rounded-md'>Update</Link> */}
           </div>
         </div>
       </div>
 
       {/* Display */}
-      <div className="pt-[14%] ml-[60%] ">
+      <div className="pt-[14%] ml-[35%] ">
+        <h1 className="font-bold ml-[120px] mb-4">Customer Information</h1>
         <table className="border-separate border-spacing-2 border rounded-md border-slate-500 bg-white shadow-2xl">
           <thead>
             <tr>
               <th className="border-2 border-slate-600 text-red-400 " scope="col">CustName</th>
               <th className="border-2 border-slate-600 text-red-400 " scope="col">CustPhone</th>
               <th className="border-2 border-slate-600 text-red-400 " scope="col">CustAddress</th>
+              {/* <th className="border-2 border-slate-600 text-red-400 " scope="col">ID</th> */}
+              <th className="border-2 border-slate-600 text-red-400 " scope="col">Edit</th>
               <th className="border-2 border-slate-600 text-red-400 " scope="col">Delete</th>
             </tr>
           </thead>
@@ -91,13 +98,19 @@ const deleteCust =  (id)=> {
               <td className="border border-slate-700">{data.name}</td>
               <td className="border border-slate-700 ">{data.phone}</td>
               <td className="border border-slate-700 ">{data.address}</td>
+              {/* <td className="border border-slate-700 ">{data._id}</td> */}
+              <td><Link to={`/update/${data._id}`}><i class="fa-regular fa-pen-to-square ml-5 text-orange-400 cursor-pointer"></i></Link></td>
               <td><i class="fa-sharp fa-solid fa-trash ml-5 text-orange-400 cursor-pointer" onClick={()=> deleteCust(data._id)}></i></td>
+             
               </tr>
               ) 
             })
           }
            </table> 
     </div>
+
+    {/* update */}
+   
 
  </div>
   )
